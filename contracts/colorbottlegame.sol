@@ -7,11 +7,6 @@ contract ColorBottleGame {
     bool public gameActive;
     address public player;
 
-    event GameStarted(address indexed player, uint256[5] arrangement);
-    event AttemptMade(address indexed player, uint256[5] attempt, uint256 correctCount);
-    event GameWon(address indexed player);
-    event GameReset();
-
     modifier onlyPlayer() {
         require(msg.sender == player, "Not your game session");
         _;
@@ -20,6 +15,11 @@ contract ColorBottleGame {
     constructor() {
         _shuffleBottles();
     }
+
+    event GameStarted(address indexed player, uint256[5] arrangement);
+    event AttemptMade(address indexed player, uint256[5] attempt, uint256 correctCount);
+    event GameWon(address indexed player);
+    event GameReset();
 
     function startGame() external {
         require(!gameActive, "Game already active");
