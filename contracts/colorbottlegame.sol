@@ -13,7 +13,7 @@ contract ColorBottleGame {
     }
 
     constructor() {
-        _shuffleBottles();
+        shuffleBottles();
     }
 
     event GameStarted(address indexed player, uint256[5] arrangement);
@@ -26,7 +26,7 @@ contract ColorBottleGame {
         player = msg.sender;
         attempts = 0;
         gameActive = true;
-        _shuffleBottles();
+        shuffleBottles();
         emit GameStarted(msg.sender, correctArrangement);
     }
 
@@ -34,7 +34,7 @@ contract ColorBottleGame {
         require(gameActive, "Start a new game first");
         require(attempts < 5, "Maximum attempts reached");
 
-        correctCount = _checkCorrectBottles(attempt);
+        correctCount = checkCorrectBottles(attempt);
         attempts++;
 
         emit AttemptMade(msg.sender, attempt, correctCount);
@@ -48,7 +48,7 @@ contract ColorBottleGame {
         }
     }
 
-    function _shuffleBottles() private {
+    function shuffleBottles() private {
         uint256 seed = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, address(this))));
         for (uint256 i = 0; i < 5; i++) {
             correctArrangement[i] = (seed % 5) + 1;
@@ -56,7 +56,7 @@ contract ColorBottleGame {
         }
     }
 
-    function _checkCorrectBottles(uint256[5] memory attempt) private view returns (uint256 count) {
+    function checkCorrectBottles(uint256[5] memory attempt) private view returns (uint256 count) {
         for (uint256 i = 0; i < 5; i++) {
             if (attempt[i] == correctArrangement[i]) {
                 count++;
