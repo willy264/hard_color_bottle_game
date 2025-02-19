@@ -59,7 +59,7 @@ contract ColorBottleGame {
     function checkCorrectBottles(uint256[5] memory attempt) private view returns (uint256 count) {
         for (uint256 i = 0; i < 5; i++) {
             if (attempt[i] == correctArrangement[i]) {
-                count++;
+                count += 1;
             }
         }
     }
