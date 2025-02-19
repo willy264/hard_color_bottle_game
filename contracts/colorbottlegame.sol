@@ -35,7 +35,7 @@ contract ColorBottleGame {
         require(attempts < 5, "Maximum attempts reached");
 
         correctCount = checkCorrectBottles(attempt);
-        attempts++;
+        attempts += 1;
 
         emit AttemptMade(msg.sender, attempt, correctCount);
 
